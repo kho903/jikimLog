@@ -1,6 +1,7 @@
 package com.jikim.blog.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.DisplayName;
@@ -37,6 +38,19 @@ class PostControllerTest {
 				.content("{\"title\": \"제목입니다.\", \"content\":\"내용입니다.\"}")
 			)
 			.andExpect(status().isOk())
-			.andExpect(content().string("Hello World"));
+			.andExpect(content().string("{}"));
+	}
+
+	@Test
+	@DisplayName("POST /posts 요청시 Hello World를 출력함.")
+	void postTest2() throws Exception {
+		// expected
+		mockMvc.perform(post("/posts")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("{\"title\": \"\", \"content\":\"내용입니다.\"}")
+			)
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.title").value("타이틀을 입력해주세요."))
+			.andDo(print());
 	}
 }
