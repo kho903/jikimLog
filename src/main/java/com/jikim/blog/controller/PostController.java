@@ -28,13 +28,17 @@ public class PostController {
 
 	@PostMapping("/posts")
 	public Map<String, String>  post(
-			// @RequestParam String title, @RequestParam String content
-			// @RequestParam Map<String, String> params
-			// JSON으로 입력 시 RequestBody
-			@RequestBody @Valid PostCreate params,
-			BindingResult result
+			@RequestBody @Valid PostCreate params
 	) throws Exception {
-		if (result.hasErrors()) {
+		/**
+		 * 문제점.
+		 *  1. 매번 메서드마다 값을 검증해야 함.
+		 * 		- 까먹을 수 있음. 버그 발생 가능성 높음.
+		 * 	2. 응답값에 HashMap -> 응답 클래스를 만들어 주는 것이 좋음.
+		 * 	3. 여러 개의 에러처리 힘듦.
+		 * 	4. 세 번 이상의 반복적인 작업은 피해야 함.
+		 */
+		/*if (result.hasErrors()) {
 			List<FieldError> fieldErrors = result.getFieldErrors();
 			FieldError firstFieldError = fieldErrors.get(0);
 			String fieldName = firstFieldError.getField();
@@ -43,7 +47,7 @@ public class PostController {
 			Map<String, String> error = new HashMap<>();
 			error.put(fieldName, errorMessage);
 			return error;
-		}
+		}*/
 		return Map.of();
 	}
 }
