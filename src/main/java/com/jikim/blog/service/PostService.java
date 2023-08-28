@@ -1,5 +1,7 @@
 package com.jikim.blog.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.jikim.blog.domain.Post;
@@ -34,5 +36,9 @@ public class PostService {
 			.title(post.getTitle())
 			.content(post.getContent())
 			.build();
+	}
+
+	public List<Post> getList() {
+		return postRepository.findAll();
 	}
 }

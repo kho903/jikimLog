@@ -2,6 +2,8 @@ package com.jikim.blog.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,7 +52,7 @@ class PostServiceTest {
 	@Test
 	@DisplayName("글 1개 조회")
 	void getPost() throws Exception {
-	    // given
+		// given
 		Post requestPost = Post.builder()
 			.title("1234567890123")
 			.content("bar")
@@ -60,10 +62,34 @@ class PostServiceTest {
 		// when
 		PostResponse response = postService.get(requestPost.getId());
 
-	    // then
+		// then
 		assertNotNull(response);
 		assertEquals(1L, postRepository.count());
 		assertEquals("1234567890", response.getTitle());
 		assertEquals("bar", response.getContent());
 	}
+
+	@Test
+	@DisplayName("글 여러 개 조회")
+	void getPosts() throws Exception {
+		// given
+		Post requestPost = Post.builder()
+			.title("foo1")
+			.content("bar1")
+			.build();
+		postRepository.save(requestPost);
+
+		Post requestPost2 = Post.builder()
+			.title("foo2")
+			.content("bar2")
+			.build();
+		postRepository.save(requestPost2);
+
+		// when
+		List<Post> posts = postService.getList();
+
+		// then
+		assertEquals(2L, posts.size());
+	}
+
 }

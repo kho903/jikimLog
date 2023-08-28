@@ -119,4 +119,27 @@ class PostControllerTest {
 			.andExpect(jsonPath("$.content").value("bar"))
 			.andDo(print());
 	}
+
+	@Test
+	@DisplayName("글 여러 개 조회")
+	void getPostList() throws Exception {
+		// given
+		Post post = Post.builder()
+			.title("1234567890123")
+			.content("bar")
+			.build();
+		postRepository.save(post);
+
+		Post post2 = Post.builder()
+			.title("1234567890123")
+			.content("bar")
+			.build();
+		postRepository.save(post2);
+
+		// when then
+		mockMvc.perform(get("/posts")
+				.contentType(APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andDo(print());
+	}
 }
