@@ -1,6 +1,7 @@
 package com.jikim.blog.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -38,7 +39,9 @@ public class PostService {
 			.build();
 	}
 
-	public List<Post> getList() {
-		return postRepository.findAll();
+	public List<PostResponse> getList() {
+		return postRepository.findAll().stream()
+			.map(PostResponse::new)
+			.collect(Collectors.toList());
 	}
 }

@@ -73,20 +73,19 @@ class PostServiceTest {
 	@DisplayName("글 여러 개 조회")
 	void getPosts() throws Exception {
 		// given
-		Post requestPost = Post.builder()
-			.title("foo1")
-			.content("bar1")
-			.build();
-		postRepository.save(requestPost);
-
-		Post requestPost2 = Post.builder()
-			.title("foo2")
-			.content("bar2")
-			.build();
-		postRepository.save(requestPost2);
+		postRepository.saveAll(List.of(
+			Post.builder()
+				.title("foo1")
+				.content("bar1")
+				.build(),
+			Post.builder()
+				.title("foo2")
+				.content("bar2")
+				.build()
+		));
 
 		// when
-		List<Post> posts = postService.getList();
+		List<PostResponse> posts = postService.getList();
 
 		// then
 		assertEquals(2L, posts.size());

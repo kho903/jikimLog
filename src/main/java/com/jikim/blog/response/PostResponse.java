@@ -1,5 +1,7 @@
 package com.jikim.blog.response;
 
+import com.jikim.blog.domain.Post;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -8,12 +10,17 @@ import lombok.RequiredArgsConstructor;
  * 서비스 정책에 맞는 클래스
  */
 @Getter
-@Builder
 public class PostResponse {
 
 	private final Long id;
 	private final String title;
 	private final String content;
+
+	public PostResponse(Post post) {
+		this.id = post.getId();
+		this.title = post.getTitle();
+		this.content = post.getContent();
+	}
 
 	@Builder
 	public PostResponse(Long id, String title, String content) {
