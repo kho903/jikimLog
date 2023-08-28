@@ -27,6 +27,9 @@ class PostControllerTest {
 	private MockMvc mockMvc;
 
 	@Autowired
+	private ObjectMapper objectMapper;
+
+	@Autowired
 	private PostRepository postRepository;
 
 	@BeforeEach
@@ -35,22 +38,20 @@ class PostControllerTest {
 	}
 
 	@Test
-	@DisplayName("POST /posts 요청시 Hello World를 출력함.")
+	@DisplayName("POST /posts 요청함.")
 	void postTest() throws Exception {
 		PostCreate request = PostCreate.builder()
 			.title("제목입니다.")
 			.content("내용입니다.")
 			.build();
-		ObjectMapper objectMapper = new ObjectMapper();
 		String json = objectMapper.writeValueAsString(request);
-		System.out.println("json = " + json);
 		// expected
 		mockMvc.perform(post("/posts")
 				.contentType(APPLICATION_JSON)
 				.content(json)
 			)
 			.andExpect(status().isOk())
-			.andExpect(content().string("{}"));
+			.andExpect(content().string(""));
 	}
 
 	@Test
@@ -61,9 +62,7 @@ class PostControllerTest {
 			.title("")
 			.content("내용입니다.")
 			.build();
-		ObjectMapper objectMapper = new ObjectMapper();
 		String json = objectMapper.writeValueAsString(request);
-		System.out.println("json = " + json);
 		// expected
 		mockMvc.perform(post("/posts")
 				.contentType(APPLICATION_JSON)
@@ -82,7 +81,7 @@ class PostControllerTest {
 		PostCreate request = PostCreate.builder()
 			.title("제목입니다.")
 			.content("내용입니다.")
-			.build();		ObjectMapper objectMapper = new ObjectMapper();
+			.build();
 		String json = objectMapper.writeValueAsString(request);
 		System.out.println("json = " + json);
 	    // when
