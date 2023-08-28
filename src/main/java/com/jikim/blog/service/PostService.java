@@ -1,5 +1,7 @@
 package com.jikim.blog.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.jikim.blog.domain.Post;
@@ -22,5 +24,12 @@ public class PostService {
 				.content(postCreate.getContent())
 				.build();
 		postRepository.save(post);
+	}
+
+	public Post get(Long id) {
+		Post post = postRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+
+		return post;
 	}
 }

@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,5 +40,11 @@ public class PostController {
 		//			-> 서버에서 차라리 유연하게 대응하는 것이 좋음.
 		//			-> 한 번에 일괄적으로 잘 처리되는 케이스는 없음. -> 잘 관리하는 형태가 중요.
 		postService.write(request);
+	}
+
+	@GetMapping("/posts/{postId}")
+	public Post get(@PathVariable(name = "postId") Long id) {
+		Post post = postService.get(id);
+		return post;
 	}
 }
