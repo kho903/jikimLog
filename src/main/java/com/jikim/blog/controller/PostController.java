@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jikim.blog.domain.Post;
 import com.jikim.blog.request.PostCreate;
+import com.jikim.blog.response.PostResponse;
 import com.jikim.blog.service.PostService;
 
 import lombok.RequiredArgsConstructor;
@@ -43,8 +44,8 @@ public class PostController {
 	}
 
 	@GetMapping("/posts/{postId}")
-	public Post get(@PathVariable(name = "postId") Long id) {
-		Post post = postService.get(id);
-		return post;
+	public PostResponse get(@PathVariable(name = "postId") Long id) {
+		PostResponse response = postService.get(id);
+		return response;
 	}
 }

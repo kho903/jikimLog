@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.jikim.blog.domain.Post;
 import com.jikim.blog.repository.PostRepository;
 import com.jikim.blog.request.PostCreate;
+import com.jikim.blog.response.PostResponse;
 
 @SpringBootTest
 class PostServiceTest {
@@ -51,18 +52,18 @@ class PostServiceTest {
 	void getPost() throws Exception {
 	    // given
 		Post requestPost = Post.builder()
-			.title("foo")
+			.title("1234567890123")
 			.content("bar")
 			.build();
 		postRepository.save(requestPost);
 
 		// when
-		Post post = postService.get(requestPost.getId());
+		PostResponse response = postService.get(requestPost.getId());
 
 	    // then
-		assertNotNull(post);
+		assertNotNull(response);
 		assertEquals(1L, postRepository.count());
-		assertEquals("foo", post.getTitle());
-		assertEquals("bar", post.getContent());
+		assertEquals("1234567890", response.getTitle());
+		assertEquals("bar", response.getContent());
 	}
 }
